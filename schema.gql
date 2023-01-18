@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Table {
+  id: ID!
+  title: String!
+  place: Float!
+  available: Boolean!
+}
+
+type TableCreateOutput {
+  table: Table!
+}
+
+type Query {
+  sayHello: String!
+}
+
+type Mutation {
+  tableCreate(input: TableCreateInput!): TableCreateOutput!
+}
+
+input TableCreateInput {
+  title: String!
+  place: Float!
+  available: Boolean!
+}
