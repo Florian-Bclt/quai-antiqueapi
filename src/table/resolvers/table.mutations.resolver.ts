@@ -1,4 +1,6 @@
+import { UseGuards } from "@nestjs/common";
 import { Args, ID, Mutation, Resolver } from "@nestjs/graphql";
+import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 import { TableCreateInput, TableCreateOutput } from "../dto/table-create.dto";
 import { TableDeleteOutput } from "../dto/table-delete.dto";
 import { TableUpdateInput, TableUpdateOutput } from "../dto/table-update.dto";
@@ -11,7 +13,7 @@ export class TableMutationsResolver {
     private readonly tableService: TableService) {}
 
 // Create table
-
+  @UseGuards(JwtAuthGuard) // protect mutations with JWT
   @Mutation(() => TableCreateOutput)
   async tableCreate(
     @Args('input') input: TableCreateInput) {
@@ -20,7 +22,7 @@ export class TableMutationsResolver {
   }
 
 // Update table 
-
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => TableUpdateOutput)
   async tableUpdate(
     @Args({name: 'tableId', type: () => ID })tableId: Table['id'],
@@ -29,7 +31,7 @@ export class TableMutationsResolver {
   }
 
 // Delete table 
-
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => TableDeleteOutput)
   async tableDelete(
     @Args({name: 'tableId', type: () => ID })tableId: Table['id']

@@ -10,6 +10,8 @@ import { AppController } from './app.controller';
 import { AppResolver } from './app.resolver';
 import { AppService } from './app.service';
 import { TableModule } from './table/table.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -33,7 +35,9 @@ import { TableModule } from './table/table.module';
         // synchronize: true uniquement en dev sinon utiliser les migrations
       })
     }),
-    TableModule
+    TableModule,
+    AuthModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],
