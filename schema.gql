@@ -2,27 +2,182 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+interface Node {
+  id: ID!
+  createAt: DateTime!
+  updateAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Table {
   id: ID!
+  createAt: DateTime!
+  updateAt: DateTime!
   title: String!
   place: Float!
-  available: Boolean!
+  statut: Boolean!
 }
 
 type TableCreateOutput {
   table: Table!
 }
 
+type TableDeleteOutput {
+  tableId: ID!
+}
+
+type TableUpdateOutput {
+  table: Table!
+}
+
+type TablesPagination {
+  totalCount: Float!
+  nodes: [Table!]!
+}
+
+type User {
+  id: ID!
+  createAt: DateTime!
+  updateAt: DateTime!
+  email: String!
+  firstName: String!
+  lastName: String!
+  allergy: String
+}
+
+type UserCreateOutput {
+  user: User!
+}
+
+type AuthLoginOutput {
+  accessToken: String!
+}
+
+type Products {
+  id: ID!
+  createAt: DateTime!
+  updateAt: DateTime!
+  title: String!
+  price: Float!
+  tags: String!
+  category: String!
+}
+
+type ProductsCreateOutput {
+  products: Products!
+}
+
+type ProductsUpdateOutput {
+  products: Products!
+}
+
+type ProductsDeleteOutput {
+  productsId: ID!
+}
+
+type ProductsPagination {
+  totalCount: Float!
+  nodes: [Products!]!
+}
+
+type Menu {
+  id: ID!
+  title: String!
+  price: Float!
+  entries: [String!]!
+  mainCourses: [String!]!
+  desserts: [String!]!
+}
+
+type MenuCreateOutput {
+  menu: Menu!
+}
+
+type MenuUpdateOutput {
+  menu: Menu!
+}
+
+type MenuDeleteOutput {
+  menuId: ID!
+}
+
 type Query {
   sayHello: String!
+  tablesPagination(skip: Int!, take: Int!, sortBy: SortDirection): [TablesPagination!]!
+  productsPagination(skip: Int!, take: Int!, sortBy: SortDirection): [ProductsPagination!]!
+  getMenu(id: String!): Menu!
+  getAllMenus: [Menu!]!
+}
+
+enum SortDirection {
+  ASC
+  DESC
 }
 
 type Mutation {
   tableCreate(input: TableCreateInput!): TableCreateOutput!
+  tableUpdate(tableId: ID!, input: TableUpdateInput!): TableUpdateOutput!
+  tableDelete(tableId: ID!): TableDeleteOutput!
+  authLogin(username: String!, password: String!): AuthLoginOutput!
+  userCreate(input: UserCreateInput!): UserCreateOutput!
+  productsCreate(input: ProductsCreateInput!): ProductsCreateOutput!
+  productsUpdate(productsId: ID!, input: ProductsUpdateInput!): ProductsUpdateOutput!
+  productsDelete(productsId: ID!): ProductsDeleteOutput!
+  menuCreate(input: MenuCreateInput!): MenuCreateOutput!
+  menuUpdate(menuId: ID!, input: MenuUpdateInput!): MenuUpdateOutput!
+  menuDelete(menuId: ID!): MenuDeleteOutput!
 }
 
 input TableCreateInput {
   title: String!
   place: Float!
-  available: Boolean!
+  statut: Boolean!
+}
+
+input TableUpdateInput {
+  title: String!
+  place: Float!
+  statut: Boolean!
+}
+
+input UserCreateInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+  allergy: String
+}
+
+input ProductsCreateInput {
+  title: String!
+  price: Float!
+  tags: String!
+  category: String!
+}
+
+input ProductsUpdateInput {
+  title: String!
+  price: Float!
+  tags: String!
+  category: String!
+}
+
+input MenuCreateInput {
+  title: String!
+  price: Float!
+  entries: [String!]!
+  mainCourses: [String!]!
+  desserts: [String!]!
+}
+
+input MenuUpdateInput {
+  title: String!
+  price: Float!
+  entries: [String!]!
+  mainCourses: [String!]!
+  desserts: [String!]!
 }

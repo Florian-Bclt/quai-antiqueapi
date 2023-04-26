@@ -12,8 +12,8 @@ export class TableMutationsResolver {
   constructor(
     private readonly tableService: TableService) {}
 
-// Create table
-  @UseGuards(JwtAuthGuard) // protect mutations with JWT
+// Créer une table
+  @UseGuards(JwtAuthGuard)
   @Mutation(() => TableCreateOutput)
   async tableCreate(
     @Args('input') input: TableCreateInput) {
@@ -21,7 +21,7 @@ export class TableMutationsResolver {
       return this.tableService.tableCreate(input);
   }
 
-// Update table 
+// Modifier une table 
   @UseGuards(JwtAuthGuard)
   @Mutation(() => TableUpdateOutput)
   async tableUpdate(

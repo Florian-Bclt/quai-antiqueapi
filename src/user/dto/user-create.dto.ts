@@ -1,6 +1,7 @@
 import { Field, InputType, ObjectType } from "@nestjs/graphql";
 import { User } from "../models/user.model";
 
+
 @InputType()
 export class UserCreateInput {
   @Field(() => String)
@@ -17,6 +18,7 @@ export class UserCreateInput {
 
   @Field(() => String, { nullable: true })
   allergy?: string;
+
 }
 
 @ObjectType()

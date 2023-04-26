@@ -7,7 +7,7 @@ import { TableService } from "../table.service";
 export class TableQueriesResolver {
   constructor(private readonly tableService: TableService) {}
 
-  @Query(() => [TablesPagination])
+  @Query(() => TablesPagination)
   async tablesPagination(@Args() args: TablesPaginationArgs) {
     return this.tableService.tablesPagination(args);
   }

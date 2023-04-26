@@ -8,6 +8,7 @@ import { TableUpdateInput, TableUpdateOutput } from './dto/table-update.dto';
 import { TablesPagination, TablesPaginationArgs } from './dto/tables-pagination.dto';
 import { Table } from './models/table.model';
 
+
 @Injectable()
 export class TableService {
   constructor(
@@ -28,10 +29,10 @@ export class TableService {
     tableId: Table['id'],
     input: TableUpdateInput
     ): Promise<TableUpdateOutput> {
-    const table = await this.tableRepository.findOneOrFail(tableId); //findOneOrFail get id or send a generated err
+    const table = await this.tableRepository.findOne({ where : {id : tableId}});
     table.title = input.title;
-    table.place = input.place;
-    table.statut = input.statut;
+    table.places = input.places;
+    table.available = input.statut;
     await table.save();
     return { table };
   }
@@ -39,7 +40,7 @@ export class TableService {
   async tableDelete(
     tableId: Table['id']
     ) : Promise<TableDeleteOutput> {
-    const table = await this.tableRepository.findOneOrFail(tableId); //findOneOrFail get id or send a generated err
+    const table = await this.tableRepository.findOne({ where : {id : tableId}});
     await table.remove();
     return { tableId };
   }
@@ -51,13 +52,13 @@ export class TableService {
       qb.take(args.take)
       qb.skip(args.skip)
       if (args.sortBy) {
-        if (args.sortBy.createAt !== null) { // null or undefined à tester
+        if (args.sortBy.createAt !== null) {
           qb.addOrderBy(
             'table.createdAt',
             args.sortBy.createAt === SortDirection.ASC ? 'ASC' : 'DESC'
           );
         }
-        if (args.sortBy.title !== null) { // null or undefined à tester
+        if (args.sortBy.title !== null) {
           qb.addOrderBy(
             'table.title',
             args.sortBy.title === SortDirection.ASC ? 'ASC' : 'DESC'
@@ -65,7 +66,11 @@ export class TableService {
         }
       }
     const [nodes, totalCount] = await qb.getManyAndCount();
+    if (!nodes.length) {
+      return { nodes: [], totalCount: 0 };
+    }
     
     return { nodes, totalCount };
   }
+  
 }

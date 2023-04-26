@@ -12,6 +12,10 @@ import { AppService } from './app.service';
 import { TableModule } from './table/table.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { ProductsModule } from './products/products.module';
+import { MenuModule } from './menu/menu.module';
+import { HourModule } from './hour/hour.module';
+import { ReservationModule } from './reservation/reservation.module';
 
 @Module({
   imports: [
@@ -37,7 +41,11 @@ import { UserModule } from './user/user.module';
     }),
     TableModule,
     AuthModule,
-    UserModule
+    UserModule,
+    ProductsModule,
+    MenuModule,
+    HourModule,
+    ReservationModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

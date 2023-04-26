@@ -1,13 +1,16 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Column, Entity } from "typeorm";
+import { Node } from "src/pagination/models/node.model";
+
+export enum UserRole {
+  ADMIN = "admin",
+  MANAGER = "manager",
+  CLIENT = "client",
+}
 
 @Entity()
 @ObjectType()
 export class User extends Node {
-  id: string;
-  save() {
-    throw new Error('Method not implemented.');
-  }
   @Field(() => String)
   @Column({ unique: true })
   email: string;
@@ -26,4 +29,7 @@ export class User extends Node {
   @Field(() => String, { nullable: true })
   @Column({ nullable: true })
   allergy?: string | null;
+
+  @Column({ default: UserRole.CLIENT})
+  role: UserRole;
 }

@@ -1,6 +1,7 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Node } from 'src/pagination/models/node.model';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Reservation } from 'src/reservation/models/reservation.model';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -10,10 +11,13 @@ export class Table extends Node {
   title: string;
 
   @Field(() => Number)
-  @Column()
-  place: number;
+  @Column({ nullable: false })
+  places: number;
 
   @Field(() => Boolean)
   @Column()
-  statut: boolean;
+  available: boolean;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.table)
+  reservations: Reservation;
 }

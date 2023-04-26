@@ -31,6 +31,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^9.0.1",
     "apollo-server-express": "^3.11.1",
+    "class-validator": "^0.13.2",
     "docker-compose": "^0.23.17",
     "graphql": "^16.6.0",
     "passport": "^0.6.0",

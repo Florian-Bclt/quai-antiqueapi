@@ -7,6 +7,6 @@ import { TableService } from './table.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Table])],
-  providers: [TableService, TableMutationsResolver, TableQueriesResolver]
+  providers: [TableService, TableMutationsResolver, TableQueriesResolver],
 })
 export class TableModule {}
