@@ -13,13 +13,34 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type User {
+  id: ID!
+  createAt: DateTime!
+  updateAt: DateTime!
+  email: String!
+  firstName: String!
+  lastName: String!
+  allergy: String
+}
+
+type Reservation {
+  id: ID!
+  createAt: DateTime!
+  updateAt: DateTime!
+  user: User!
+  table: Table!
+  date: DateTime!
+  reservationHour: Int!
+  places: Int!
+}
+
 type Table {
   id: ID!
   createAt: DateTime!
   updateAt: DateTime!
   title: String!
-  place: Float!
-  statut: Boolean!
+  places: Float!
+  available: Boolean!
 }
 
 type TableCreateOutput {
@@ -39,17 +60,11 @@ type TablesPagination {
   nodes: [Table!]!
 }
 
-type User {
-  id: ID!
-  createAt: DateTime!
-  updateAt: DateTime!
-  email: String!
-  firstName: String!
-  lastName: String!
-  allergy: String
+type UserCreateOutput {
+  user: User!
 }
 
-type UserCreateOutput {
+type UserUpdateOutput {
   user: User!
 }
 
@@ -105,12 +120,26 @@ type MenuDeleteOutput {
   menuId: ID!
 }
 
+type OpeningHours {
+  day: String!
+  lunchOpeningTime: String!
+  lunchClosingTime: String!
+  dinnerOpeningTime: String!
+  dinnerClosingTime: String!
+}
+
 type Query {
   sayHello: String!
-  tablesPagination(skip: Int!, take: Int!, sortBy: SortDirection): [TablesPagination!]!
+  tablesPagination(skip: Int!, take: Int!, sortBy: SortDirection): TablesPagination!
+  users: [User!]!
+  user(id: String!): User!
+  userGetByRole(role: String!): [User!]!
   productsPagination(skip: Int!, take: Int!, sortBy: SortDirection): [ProductsPagination!]!
   getMenu(id: String!): Menu!
   getAllMenus: [Menu!]!
+  getReservationById(reservationId: String!): Reservation!
+  getReservationsByUser(userId: String!): [Reservation!]!
+  getReservationsByTable(tableId: String!): [Reservation!]!
 }
 
 enum SortDirection {
@@ -124,24 +153,31 @@ type Mutation {
   tableDelete(tableId: ID!): TableDeleteOutput!
   authLogin(username: String!, password: String!): AuthLoginOutput!
   userCreate(input: UserCreateInput!): UserCreateOutput!
+  userUpdate(id: String!, input: UserUpdateInput!): UserUpdateOutput!
+  userDelete(id: String!): Boolean!
   productsCreate(input: ProductsCreateInput!): ProductsCreateOutput!
   productsUpdate(productsId: ID!, input: ProductsUpdateInput!): ProductsUpdateOutput!
   productsDelete(productsId: ID!): ProductsDeleteOutput!
   menuCreate(input: MenuCreateInput!): MenuCreateOutput!
   menuUpdate(menuId: ID!, input: MenuUpdateInput!): MenuUpdateOutput!
   menuDelete(menuId: ID!): MenuDeleteOutput!
+  createOpeningHours(input: OpeningHoursCreateInput!): OpeningHours!
+  updateOpeningHours(id: String!, input: OpeningHoursUpdateInput!): OpeningHours!
+  createReservation(userId: String!, reservation: ReservationCreateInput!): Reservation!
+  updateReservation(reservationId: String!, reservation: ReservationUpdateInput!): Reservation!
+  cancelReservation(reservationId: String!): String!
 }
 
 input TableCreateInput {
   title: String!
-  place: Float!
-  statut: Boolean!
+  places: Int! = 0
+  available: Boolean!
 }
 
 input TableUpdateInput {
   title: String!
-  place: Float!
-  statut: Boolean!
+  places: Int! = 0
+  available: Boolean!
 }
 
 input UserCreateInput {
@@ -149,6 +185,14 @@ input UserCreateInput {
   password: String!
   firstName: String!
   lastName: String!
+  allergy: String
+}
+
+input UserUpdateInput {
+  email: String
+  password: String
+  firstName: String
+  lastName: String
   allergy: String
 }
 
@@ -180,4 +224,35 @@ input MenuUpdateInput {
   entries: [String!]!
   mainCourses: [String!]!
   desserts: [String!]!
+}
+
+input OpeningHoursCreateInput {
+  id: ID!
+  dayOfWeek: String!
+  isClosed: Boolean!
+  openTime: String
+  closeTime: String
+}
+
+input OpeningHoursUpdateInput {
+  id: ID!
+  dayOfWeek: String!
+  isClosed: Boolean!
+  openTime: String
+  closeTime: String
+}
+
+input ReservationCreateInput {
+  guests: Int!
+  date: DateTime!
+  reservationHour: Int!
+  tableId: String!
+}
+
+input ReservationUpdateInput {
+  guests: Int!
+  date: DateTime!
+  reservationHour: Int!
+  tableId: String!
+  id: String!
 }

@@ -15,7 +15,7 @@ export class Table extends Node {
   places: number;
 
   @Field(() => Boolean)
-  @Column()
+  @Column({ nullable: false})
   available: boolean;
 
   @OneToMany(() => Reservation, (reservation) => reservation.table)

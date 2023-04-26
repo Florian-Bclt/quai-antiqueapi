@@ -32,7 +32,7 @@ export class TableService {
     const table = await this.tableRepository.findOne({ where : {id : tableId}});
     table.title = input.title;
     table.places = input.places;
-    table.available = input.statut;
+    table.available = input.available;
     await table.save();
     return { table };
   }

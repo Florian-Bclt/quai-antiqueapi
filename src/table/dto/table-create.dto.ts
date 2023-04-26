@@ -1,6 +1,6 @@
 import { Field, InputType, Int, ObjectType } from "@nestjs/graphql";
 import { Table } from "../models/table.model";
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 @InputType()
 export class TableCreateInput {
@@ -15,7 +15,9 @@ export class TableCreateInput {
   places: number;
 
   @Field(() => Boolean)
-  statut: boolean;
+  @IsNotEmpty()
+  @IsBoolean()
+  available: boolean;
 }
 
 @ObjectType()
