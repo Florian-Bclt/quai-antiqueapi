@@ -16,6 +16,7 @@ import { ProductsModule } from './products/products.module';
 import { MenuModule } from './menu/menu.module';
 import { HourModule } from './hour/hour.module';
 import { ReservationModule } from './reservation/reservation.module';
+import { GalleryModule } from './gallery/gallery.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { ReservationModule } from './reservation/reservation.module';
     MenuModule,
     HourModule,
     ReservationModule,
+    GalleryModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

@@ -136,6 +136,28 @@ type OpeningHours {
   dinnerClosingTime: String!
 }
 
+type Gallery {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  title: String!
+  description: String!
+  url: String!
+  alt: String!
+}
+
+type GalleryCreateOutput {
+  gallery: Gallery!
+}
+
+type GalleryUpdateOutput {
+  gallery: Gallery!
+}
+
+type GalleryDeleteOutput {
+  galleryId: ID!
+}
+
 type Query {
   sayHello: String!
   tablesPagination(skip: Int!, take: Int!, sortBy: SortDirection): TablesPagination!
@@ -148,6 +170,8 @@ type Query {
   getReservationById(reservationId: String!): Reservation!
   getReservationsByUser(userId: String!): [Reservation!]!
   getReservationsByTable(tableId: String!): [Reservation!]!
+  getAllGallery: [Gallery!]!
+  getGalleryById(id: String!): Gallery!
 }
 
 enum SortDirection {
@@ -174,6 +198,9 @@ type Mutation {
   createReservation(userId: String!, reservation: ReservationCreateInput!): Reservation!
   updateReservation(reservationId: String!, reservation: ReservationUpdateInput!): Reservation!
   cancelReservation(reservationId: String!): String!
+  galleryCreate(input: GalleryCreateInput!): GalleryCreateOutput!
+  galleryUpdate(galleryId: ID!, input: GalleryUpdateInput!): GalleryUpdateOutput!
+  galleryDelete(galleryId: ID!): GalleryDeleteOutput!
 }
 
 input TableCreateInput {
@@ -265,4 +292,18 @@ input ReservationUpdateInput {
   reservationHour: Int!
   tableId: String!
   id: String!
+}
+
+input GalleryCreateInput {
+  title: String!
+  description: String!
+  url: String!
+  alt: String!
+}
+
+input GalleryUpdateInput {
+  title: String!
+  description: String!
+  url: String!
+  alt: String!
 }
