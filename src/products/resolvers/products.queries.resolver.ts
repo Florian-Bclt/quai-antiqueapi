@@ -7,7 +7,7 @@ import { ProductsPagination, ProductsPaginationArgs } from "../dto/products-pagi
 export class ProductsQueriesResolver {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Query(() => [ProductsPagination])
+  @Query(() => ProductsPagination)
   async productsPagination(@Args() args: ProductsPaginationArgs) {
     return this.productsService.productsPagination(args);
   }

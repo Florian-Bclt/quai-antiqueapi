@@ -29,6 +29,10 @@ export class Reservation extends Node {
   reservationHour: number;
 
   @Field(() => Int)
+  @Column({ name: 'reservation_end_hour' })
+  reservationEndHour: number;
+
+  @Field(() => Int)
   @Column()
   places: number;
 }

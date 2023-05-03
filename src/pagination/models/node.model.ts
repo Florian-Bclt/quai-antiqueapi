@@ -9,9 +9,9 @@ export abstract class Node extends BaseEntity {
 
   @Field(() => Date)
   @CreateDateColumn()
-  createAt: Date;
+  createdAt: Date;
 
   @Field(() => Date)
   @UpdateDateColumn()
-  updateAt: Date;
+  updatedAt: Date;
 }

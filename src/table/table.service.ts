@@ -12,11 +12,11 @@ import { Table } from './models/table.model';
 @Injectable()
 export class TableService {
   constructor(
-    // Creation of table
     @InjectRepository(Table)
     private readonly tableRepository: Repository<Table>
   ) {}
 
+  // Creation of table
   async tableCreate(
     input: TableCreateInput
     ): Promise<TableCreateOutput> {
@@ -52,10 +52,10 @@ export class TableService {
       qb.take(args.take)
       qb.skip(args.skip)
       if (args.sortBy) {
-        if (args.sortBy.createAt !== null) {
+        if (args.sortBy.createdAt !== null) {
           qb.addOrderBy(
             'table.createdAt',
-            args.sortBy.createAt === SortDirection.ASC ? 'ASC' : 'DESC'
+            args.sortBy.createdAt === SortDirection.ASC ? 'ASC' : 'DESC'
           );
         }
         if (args.sortBy.title !== null) {

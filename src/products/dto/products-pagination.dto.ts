@@ -2,7 +2,6 @@ import { ArgsType, Field, InputType, ObjectType } from "@nestjs/graphql";
 import { Pagination, PaginationArgs, PaginationSortBy, SortDirection } from "../../pagination/dto/pagination.dto";
 import { Products } from "../models/products.model";
 
-// Sort by title
 @InputType()
 export class ProductsPaginationSortBy extends PaginationSortBy{
   @Field(() => SortDirection, { nullable : true })
@@ -12,6 +11,9 @@ export class ProductsPaginationSortBy extends PaginationSortBy{
 export class ProductsPaginationArgs extends PaginationArgs {
   @Field(() => SortDirection, { nullable : true })
   sortBy?: ProductsPaginationSortBy;
+
+  @Field(() => String, { nullable: true })
+  category?: string;
 }
 
 @ObjectType()

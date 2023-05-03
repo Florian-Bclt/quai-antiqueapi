@@ -10,11 +10,11 @@ registerEnumType(SortDirection, {
   name: 'SortDirection'
 });
 
-//Find by creationDate
+//Chercher par date de création
 @InputType()
 export class PaginationSortBy {
   @Field(() => SortDirection, { nullable: true})
-  createAt?: SortDirection;
+  createdAt?: SortDirection;
 }
 
 @ArgsType()
@@ -26,7 +26,7 @@ export class PaginationArgs {
   take: number;
 }
 
-// Get all elements
+// Récupérer tous les éléments
 @InterfaceType()
 export abstract class Pagination<N extends Node = Node> {
   @Field()

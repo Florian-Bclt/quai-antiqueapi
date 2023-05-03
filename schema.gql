@@ -4,8 +4,8 @@
 
 interface Node {
   id: ID!
-  createAt: DateTime!
-  updateAt: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """
@@ -15,29 +15,37 @@ scalar DateTime
 
 type User {
   id: ID!
-  createAt: DateTime!
-  updateAt: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   email: String!
   firstName: String!
   lastName: String!
   allergy: String
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  CLIENT
 }
 
 type Reservation {
   id: ID!
-  createAt: DateTime!
-  updateAt: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   user: User!
   table: Table!
   date: DateTime!
   reservationHour: Int!
+  reservationEndHour: Int!
   places: Int!
 }
 
 type Table {
   id: ID!
-  createAt: DateTime!
-  updateAt: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   places: Float!
   available: Boolean!
@@ -74,8 +82,8 @@ type AuthLoginOutput {
 
 type Products {
   id: ID!
-  createAt: DateTime!
-  updateAt: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   price: Float!
   tags: String!
@@ -134,7 +142,7 @@ type Query {
   users: [User!]!
   user(id: String!): User!
   userGetByRole(role: String!): [User!]!
-  productsPagination(skip: Int!, take: Int!, sortBy: SortDirection): [ProductsPagination!]!
+  productsPagination(skip: Int!, take: Int!, sortBy: SortDirection, category: String): ProductsPagination!
   getMenu(id: String!): Menu!
   getAllMenus: [Menu!]!
   getReservationById(reservationId: String!): Reservation!
@@ -186,6 +194,7 @@ input UserCreateInput {
   firstName: String!
   lastName: String!
   allergy: String
+  role: UserRole!
 }
 
 input UserUpdateInput {
@@ -194,6 +203,7 @@ input UserUpdateInput {
   firstName: String
   lastName: String
   allergy: String
+  role: UserRole
 }
 
 input ProductsCreateInput {

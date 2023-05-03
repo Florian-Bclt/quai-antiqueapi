@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Column, Entity } from "typeorm";
 import { Node } from "src/pagination/models/node.model";
 
@@ -7,6 +7,8 @@ export enum UserRole {
   MANAGER = "manager",
   CLIENT = "client",
 }
+
+registerEnumType(UserRole, { name: 'UserRole' });
 
 @Entity()
 @ObjectType()
@@ -30,6 +32,7 @@ export class User extends Node {
   @Column({ nullable: true })
   allergy?: string | null;
 
+  @Field(() => UserRole, { defaultValue: UserRole.CLIENT })
   @Column({ default: UserRole.CLIENT})
   role: UserRole;
 }

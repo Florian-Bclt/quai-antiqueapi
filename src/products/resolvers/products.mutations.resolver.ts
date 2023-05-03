@@ -11,14 +11,15 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 export class ProductsMutationResolver {
   constructor(private readonly productsService: ProductsService) {}
 
-  // Create products
-  @UseGuards(JwtAuthGuard) // protect mutations with JWT
+  // Créer un produit
+  @UseGuards(JwtAuthGuard) // Protection des mutations avec JWT
   @Mutation(() => ProductsCreateOutput)
-    async productsCreate(@Args('input') input: ProductsCreateInput) {
+    async productsCreate(
+      @Args('input') input: ProductsCreateInput) {
       return this.productsService.productsCreate(input);
     }
 
-  // Update products
+  // Modifier un produit
   @UseGuards(JwtAuthGuard)
   @Mutation(() => ProductsUpdateOutput)
     async productsUpdate(
@@ -27,7 +28,7 @@ export class ProductsMutationResolver {
       return this.productsService.productsUpdate(productsId, input);
     }
 
-  // Delete products
+  // Supprimer un produit
   @UseGuards(JwtAuthGuard)
   @Mutation(() => ProductsDeleteOutput)
     async productsDelete(

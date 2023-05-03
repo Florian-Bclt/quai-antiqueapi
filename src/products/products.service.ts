@@ -15,7 +15,9 @@ export class ProductsService {
     private readonly productsRepository: Repository<Products>,
   ) {}
 
-  async productsCreate(input: ProductsCreateInput): Promise<ProductsCreateOutput> {
+  async productsCreate(
+    input: ProductsCreateInput
+    ): Promise<ProductsCreateOutput> {
     const newProducts = this.productsRepository.create(input);
     const products = await this.productsRepository.save(newProducts);
     return { products };
@@ -49,10 +51,10 @@ export class ProductsService {
       qb.take(args.take)
       qb.skip(args.skip)
       if (args.sortBy) {
-        if (args.sortBy.createAt !== null) {
+        if (args.sortBy.createdAt !== null) {
           qb.addOrderBy(
             'products.createdAt',
-            args.sortBy.createAt === SortDirection.ASC ? 'ASC' : 'DESC'
+            args.sortBy.createdAt === SortDirection.ASC ? 'ASC' : 'DESC'
           );
         }
         if (args.sortBy.title !== null) {
@@ -62,6 +64,11 @@ export class ProductsService {
           );
         }
       }
+
+      if (args.category) {
+        qb.andWhere('products.category = :category', { category: args.category})
+      }
+
     const [nodes, totalCount] = await qb.getManyAndCount();
     
     return { nodes, totalCount };

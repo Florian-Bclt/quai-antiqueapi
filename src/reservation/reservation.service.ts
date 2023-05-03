@@ -9,6 +9,8 @@ import { ReservationUpdateInput } from "./dto/reservation-update.dto";
 
 @Injectable()
 export class ReservationService {
+  private readonly RESERVATION_DURATION = 4; // Durée de réservation en heure
+
   constructor(
     @InjectRepository(Reservation)
     private readonly reservationRepository: Repository<Reservation>,
@@ -16,6 +18,7 @@ export class ReservationService {
     private readonly userService: UserService,
   ) {}
 
+  // Vérifie si la table est disponible pour une réservation à l'heure donnée
   async isTableAvailable(tableId: string, date: Date, reservationHour: number, guests: number): Promise<boolean> {
     // Vérifier si la table existe
     const tablesPagination = await this.tableService.tablesPagination({ take: 1, skip: 0, sortBy: null });
@@ -45,6 +48,7 @@ export class ReservationService {
     return true;
   }
   
+  // Crée une nouvelle réservation pour l'utilisateur donné
   async createReservation(userId: string, createReservationDto: ReservationCreateInput): Promise<Reservation> {
     const { tableId, date, reservationHour, guests } = createReservationDto;
   
@@ -52,6 +56,9 @@ export class ReservationService {
     if (!isTableAvailable) {
       throw new ConflictException(`Table with ID "${tableId}" is not available at ${reservationHour} on ${date}`);
     }
+
+    // Calculer l'heure de fin de la réservation
+    const reservationEndHour = reservationHour + this.RESERVATION_DURATION;
 
     // Créer la réservation
     const user = await this.userService.getUserById(userId);
@@ -61,6 +68,7 @@ export class ReservationService {
     reservation.date = date;
     reservation.reservationHour = reservationHour;
     reservation.places = guests;
+    reservation.reservationEndHour = reservationEndHour;
 
     await this.reservationRepository.save(reservation);
 
