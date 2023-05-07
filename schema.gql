@@ -78,6 +78,7 @@ type UserUpdateOutput {
 
 type AuthLoginOutput {
   accessToken: String!
+  role: String!
 }
 
 type Products {
@@ -109,11 +110,28 @@ type ProductsPagination {
 
 type Menu {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   title: String!
   price: Float!
-  entries: [String!]!
-  mainCourses: [String!]!
-  desserts: [String!]!
+  entries: [MenuEntry!]!
+  mainCourses: [MenuMainCourse!]!
+  desserts: [MenuDessert!]!
+}
+
+type MenuEntry {
+  title: String!
+  description: String!
+}
+
+type MenuMainCourse {
+  title: String!
+  description: String!
+}
+
+type MenuDessert {
+  title: String!
+  description: String!
 }
 
 type MenuCreateOutput {
@@ -164,6 +182,7 @@ type Query {
   users: [User!]!
   user(id: String!): User!
   userGetByRole(role: String!): [User!]!
+  userGetByRoles(roles: [String!]!): [User!]!
   productsPagination(skip: Int!, take: Int!, sortBy: SortDirection, category: String): ProductsPagination!
   getMenu(id: String!): Menu!
   getAllMenus: [Menu!]!
@@ -249,18 +268,33 @@ input ProductsUpdateInput {
 
 input MenuCreateInput {
   title: String!
-  price: Float!
-  entries: [String!]!
-  mainCourses: [String!]!
-  desserts: [String!]!
+  price: Int!
+  entries: [MenuEntryInput!]!
+  mainCourses: [MenuMainCourseInput!]!
+  desserts: [MenuDessertInput!]!
+}
+
+input MenuEntryInput {
+  title: String!
+  description: String!
+}
+
+input MenuMainCourseInput {
+  title: String!
+  description: String!
+}
+
+input MenuDessertInput {
+  title: String!
+  description: String!
 }
 
 input MenuUpdateInput {
   title: String!
-  price: Float!
-  entries: [String!]!
-  mainCourses: [String!]!
-  desserts: [String!]!
+  price: Int!
+  entries: [MenuEntryInput!]!
+  mainCourses: [MenuMainCourseInput!]!
+  desserts: [MenuDessertInput!]!
 }
 
 input OpeningHoursCreateInput {

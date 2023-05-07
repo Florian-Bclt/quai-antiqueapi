@@ -1,27 +1,83 @@
-import { Field, InputType, ObjectType } from "@nestjs/graphql";
-import { Menu } from "../models/menu.model";
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
+import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { Menu } from '../models/menu.model';
+import { Type } from 'class-transformer';
+
+@InputType()
+class MenuEntryInput {
+  @IsString()
+  @IsNotEmpty()
+  @Field()
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Field()
+  description: string;
+}
+
+@InputType()
+class MenuMainCourseInput {
+  @IsString()
+  @IsNotEmpty()
+  @Field()
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Field()
+  description: string;
+}
+
+@InputType()
+class MenuDessertInput {
+  @IsString()
+  @IsNotEmpty()
+  @Field()
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Field()
+  description: string;
+}
 
 @InputType()
 export class MenuCreateInput {
-  @Field(() => String)
+  @IsString()
+  @IsNotEmpty()
+  @Field()
   title: string;
 
-  @Field(() => Number)
+  @IsNumber()
+  @IsNotEmpty()
+  @Field(() => Int)
   price: number;
 
-  @Field(() => [String])
-  entries: string[];
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => MenuEntryInput)
+  @IsNotEmpty()
+  @Field(() => [MenuEntryInput])
+  entries: MenuEntryInput[];
 
-  @Field(() => [String])
-  mainCourses: string[];
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => MenuMainCourseInput)
+  @IsNotEmpty()
+  @Field(() => [MenuMainCourseInput])
+  mainCourses: MenuMainCourseInput[];
 
-  @Field(() => [String])
-  desserts: string[];
-
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => MenuDessertInput)
+  @IsNotEmpty()
+  @Field(() => [MenuDessertInput])
+  desserts: MenuDessertInput[];
 }
 
 @ObjectType()
 export class MenuCreateOutput {
-  @Field(() => Menu)
+  @Field()
   menu: Menu;
 }

@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { UserCreateInput, UserCreateOutput } from './dto/user-create.dto';
 import { User, UserRole } from './models/user.model';
 import { UserUpdateInput, UserUpdateOutput } from './dto/user-update.dto';
@@ -57,23 +57,32 @@ export class UserService {
     return await this.userRepository.find();
   }
 
-  // find users by role
-  async userGetByRole(role: string): Promise<User[]> {
-    const userRole = UserRole[role];
-    if (!userRole) {
-      throw new BadRequestException(`Invalid role: ${role}`);
-    }
-    return await this.userRepository.find({ where: { role: userRole } });
+  // find user by role
+  async userGetByRole(role: UserRole): Promise<User[]> {
+    return await this.userRepository.find({ where: { role } });
   }
 
+  // find users by role
+  async userGetByRoles(roles: UserRole[]): Promise<User[]> {
+    const validRoles = [UserRole.ADMIN, UserRole.MANAGER, UserRole.CLIENT];
+  
+    for (const role of roles) {
+      if (!validRoles.includes(role)) {
+        throw new BadRequestException(`Invalid role: ${role}`);
+      }
+    }
+  
+    return await this.userRepository.find({ where: { role: In(roles) } });
+  }
+  
+
   // find user by id
-  async getUserById(id: string): Promise<User> {
+  async getUserById(id: string, role: UserRole): Promise<User> {
     const user = await this.userRepository.findOne({ where : { id } });
     if (!user) {
       throw new NotFoundException(`User with ID "${id}" not found`);
     }
+    user.role = role;
     return user;
   }
-  
-  
 }

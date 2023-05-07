@@ -17,7 +17,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   }
 }
 
-//Get user during the functions using this guard
+// Récupère l'utilisateur lors de la fonction
 export const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
     const ctx = GqlExecutionContext.create(context);

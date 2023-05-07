@@ -18,7 +18,7 @@ import { LocalStrategy } from './strategies/local.strategy';
       inject: [ConfigService],
       useFactory: (ConfigService) => ({
         secret: ConfigService.get('JWT_SECRET'),
-        signOptions: { expiresIn: '10m' },
+        signOptions: { expiresIn: '60s' },
       }),
   })],
   providers: [AuthService, AuthMutationsResolver, LocalStrategy, JwtStrategy]

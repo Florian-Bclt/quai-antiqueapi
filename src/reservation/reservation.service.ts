@@ -6,6 +6,7 @@ import { UserService } from "src/user/user.service";
 import { Repository } from "typeorm";
 import { ReservationCreateInput } from "./dto/reservation-create.dto";
 import { ReservationUpdateInput } from "./dto/reservation-update.dto";
+import { UserRole } from "src/user/models/user.model";
 
 @Injectable()
 export class ReservationService {
@@ -61,7 +62,7 @@ export class ReservationService {
     const reservationEndHour = reservationHour + this.RESERVATION_DURATION;
 
     // Créer la réservation
-    const user = await this.userService.getUserById(userId);
+    const user = await this.userService.getUserById(userId, UserRole.CLIENT);
     const reservation = new Reservation();
     reservation.user = user;
     reservation.tableId = tableId;

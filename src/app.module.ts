@@ -17,6 +17,7 @@ import { MenuModule } from './menu/menu.module';
 import { HourModule } from './hour/hour.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { GalleryModule } from './gallery/gallery.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { GalleryModule } from './gallery/gallery.module';
     HourModule,
     ReservationModule,
     GalleryModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppResolver],

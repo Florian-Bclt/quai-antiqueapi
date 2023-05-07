@@ -1,30 +1,55 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Node } from 'src/pagination/models/node.model';
+import { Column, Entity } from 'typeorm';
 
 @Entity()
 @ObjectType()
-export class Menu extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  @Field(() => ID)
-  id: string;
-
+export class Menu extends Node {
   @Field(() => String)
-  @Column()
+  @Column({ nullable: false})
   title: string;
 
   @Field(() => Number)
-  @Column()
+  @Column({ nullable: false})
   price: number;
 
-  @Field(() => [String])
-  @Column('simple-array')
-  entries: string[];
+  @Field(() => [MenuEntry])
+  @Column({ type: 'jsonb', nullable: false })
+  entries: MenuEntry[];
 
-  @Field(() => [String])
-  @Column('simple-array')
-  mainCourses: string[];
+  @Field(() => [MenuMainCourse])
+  @Column({ type: 'jsonb', nullable: false })
+  mainCourses: MenuMainCourse[];
 
-  @Field(() => [String])
-  @Column('simple-array')
-  desserts: string[];
+  @Field(() => [MenuDessert])
+  @Column({ type: 'jsonb', nullable: false })
+  @Directive('@default(value: [])')
+  desserts: MenuDessert[];
+}
+
+@ObjectType()
+export class MenuEntry {
+  @Field(() => String)
+  title: string;
+
+  @Field(() => String)
+  description: string;
+}
+
+@ObjectType()
+export class MenuMainCourse {
+  @Field(() => String)
+  title: string;
+
+  @Field(() => String)
+  description: string;
+}
+
+@ObjectType()
+export class MenuDessert {
+  @Field(() => String)
+  title: string;
+
+  @Field(() => String)
+  description: string;
 }

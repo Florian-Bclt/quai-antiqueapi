@@ -25,4 +25,15 @@ export class UserQueriesResolver {
     }
     return this.userService.userGetByRole(role as UserRole);
   }
+
+  @Query(() => [User])
+  async userGetByRoles(@Args('roles', { type: () => [String] }) roles: string[]): Promise<User[]> {
+    const validRoles = Object.values(UserRole);
+    for (const role of roles) {
+      if (!validRoles.includes(role as UserRole)) {
+        throw new Error(`Invalid role: ${role}`);
+      }
+    }
+    return this.userService.userGetByRoles(roles as UserRole[]);
+  }
 }

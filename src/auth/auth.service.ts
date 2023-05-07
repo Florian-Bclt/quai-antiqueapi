@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/user/models/user.model';
+import { User, UserRole } from 'src/user/models/user.model';
 import { UserService } from 'src/user/user.service';
 import { AuthLoginOutput } from './dto/auth-login.dto';
 
@@ -9,6 +9,7 @@ export interface JWTPayLoad {
   email: string;
   firstName: string;
   lastName: string;
+  role : UserRole;
 }
 
 @Injectable()
@@ -34,9 +35,11 @@ export class AuthService {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
     }
     return {
       accessToken: this.jwtService.sign(payload),
+      role: user.role,
     };
   }
 }
