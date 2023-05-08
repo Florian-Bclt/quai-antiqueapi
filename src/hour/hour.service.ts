@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OpeningHours } from './models/hour.model';
@@ -12,7 +12,7 @@ export class OpeningHoursService {
     private readonly openingHoursRepository: Repository<OpeningHours>,
   ) {}
 
-  // Create hour
+  // Créer un horaire
   async OpeningHoursCreate(input: OpeningHoursCreateInput): Promise<OpeningHoursCreateOutput> {
     const openingHours = this.openingHoursRepository.create(input);
     const savedOpeningHours = await this.openingHoursRepository.save(openingHours);
@@ -22,7 +22,7 @@ export class OpeningHoursService {
     return output;
   }
 
-  // Update hour
+  // Modifier un horaire
   async OpeningHoursUpdate(id: string, input: OpeningHoursUpdateInput): Promise<OpeningHoursUpdateOutput> {
     const openingHours = await this.openingHoursRepository.findOne({where : { id }});
     Object.assign(openingHours, input);
@@ -30,7 +30,7 @@ export class OpeningHoursService {
     return { openingHours}
   }
 
-  // Delete hour
+  // Supprimer un horaire
   async OpeningHoursDelete(id: string): Promise<String> {
     const result = await this.openingHoursRepository.delete(id);
     if (result.affected === 0) {
@@ -39,12 +39,12 @@ export class OpeningHoursService {
     return id;
   }
 
-  // List all hours
+  // Afficher la liste des horaires
   async findAllOpeningHours(): Promise<OpeningHours[]> {
     return await this.openingHoursRepository.find();
   }
 
-  // List hour by id
+  // Afficher un horaire en fonction de l'id
   async findOneOpeningHoursById(id: string): Promise<OpeningHours> {
     return await this.openingHoursRepository.findOne({where : { id }});
   }

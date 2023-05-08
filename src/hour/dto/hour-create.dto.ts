@@ -12,10 +12,10 @@ export class OpeningHoursCreateInput{
   @Field({ nullable: true })
   lunchOpeningTime?: string;
 
-  @Field({ nullable: true })
+  @Field({nullable: true })
   lunchClosingTime?: string;
 
-  @Field({ nullable: true })
+  @Field({nullable: true })
   dinnerOpeningTime?: string;
 
   @Field({ nullable: true })

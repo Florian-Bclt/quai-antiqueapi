@@ -25,5 +25,4 @@ export class ReservationMutationsResolver {
     await this.reservationService.cancelReservation(reservationId);
     return `Reservation with ID "${reservationId}" has been cancelled.`;
   }
-  
 }

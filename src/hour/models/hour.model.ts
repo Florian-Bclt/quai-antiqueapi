@@ -28,5 +28,5 @@ export class OpeningHours extends Node{
 
   @Field(() => String, { nullable: true})
   @Column({ nullable: true })
-  dinnerClosingTime: string;
+  dinnerClosingTime?: string;
 }

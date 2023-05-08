@@ -147,5 +147,9 @@ export class ReservationService {
 
     return reservations;
   }
+
+  async findReservationsByDateAndTable(date: Date, tableId: string): Promise<Reservation[]> {
+    return await this.reservationRepository.find({ where: { date, table: { id: tableId } } });
+  }
 }  
      

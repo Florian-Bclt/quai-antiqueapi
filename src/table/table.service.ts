@@ -45,6 +45,10 @@ export class TableService {
     return { tableId };
   }
 
+  async findTableById(tableId: string): Promise<Table> {
+    return this.tableRepository.findOneOrFail({where : {id : tableId}});
+  }
+  
   async tablesPagination(
     args: TablesPaginationArgs
     ): Promise<TablesPagination> {
@@ -72,5 +76,4 @@ export class TableService {
     
     return { nodes, totalCount };
   }
-  
 }
