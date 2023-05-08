@@ -8,6 +8,7 @@ import { Table } from "../models/table.model";
 import { TableService } from "../table.service";
 import { RoleGuard } from "src/auth/guards/role.guard";
 import { UserRole } from "src/user/models/user.model";
+import { Request } from 'express';
 
 @Resolver(Table)
 export class TableMutationsResolver {
@@ -19,10 +20,10 @@ export class TableMutationsResolver {
   @Mutation(() => TableCreateOutput)
   async tableCreate(
     @Args('input') input: TableCreateInput,
-    @Context() ctx
-    ) {
-      const requiredRole = UserRole.ADMIN;
-      ctx.switchToHttp().getRequest().requiredRole = requiredRole;
+    @Context('req') req: Request,
+  ) {
+    const requiredRole = UserRole.ADMIN;
+    req['requiredRole'] = requiredRole;
       
       return this.tableService.tableCreate(input);
   }
@@ -33,10 +34,10 @@ export class TableMutationsResolver {
   async tableUpdate(
     @Args({name: 'tableId', type: () => ID })tableId: Table['id'],
     @Args('input') input: TableUpdateInput,
-    @Context() ctx
-    ) {
-      const requiredRole = UserRole.ADMIN;
-      ctx.switchToHttp().getRequest().requiredRole = requiredRole;
+    @Context('req') req: Request,
+  ) {
+    const requiredRole = UserRole.ADMIN;
+    req['requiredRole'] = requiredRole;
 
       return this.tableService.tableUpdate(tableId, input);
   }
@@ -46,10 +47,10 @@ export class TableMutationsResolver {
   @Mutation(() => TableDeleteOutput)
   async tableDelete(
     @Args({name: 'tableId', type: () => ID })tableId: Table['id'],
-    @Context() ctx
-    ) {
-      const requiredRole = UserRole.ADMIN;
-      ctx.switchToHttp().getRequest().requiredRole = requiredRole;
+    @Context('req') req: Request,
+  ) {
+    const requiredRole = UserRole.ADMIN;
+    req['requiredRole'] = requiredRole;
       
       return this.tableService.tableDelete(tableId);
   }

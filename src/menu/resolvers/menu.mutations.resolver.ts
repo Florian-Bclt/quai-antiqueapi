@@ -8,6 +8,7 @@ import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RoleGuard } from 'src/auth/guards/role.guard';
 import { UserRole } from 'src/user/models/user.model';
+import { Request } from 'express';
 
 @Resolver(() => Menu)
 export class MenuMutationsResolver {
@@ -18,10 +19,10 @@ export class MenuMutationsResolver {
   @Mutation(() => MenuCreateOutput)
   async menuCreate(
     @Args('input') input: MenuCreateInput,
-    @Context() ctx
-    ) {
+    @Context('req') req: Request,
+      ) {
       const requiredRole = UserRole.ADMIN;
-      ctx.switchToHttp().getRequest().requiredRole = requiredRole;
+      req['requiredRole'] = requiredRole;
 
       return this.menuService.menuCreate(input);
   }
@@ -32,10 +33,10 @@ export class MenuMutationsResolver {
   async menuUpdate(
     @Args({ name: 'menuId', type: () => ID }) menuId: Menu['id'],
     @Args('input') input: MenuUpdateInput,
-    @Context() ctx
+    @Context('req') req: Request,
     ) {
-      const requiredRole = UserRole.ADMIN;
-      ctx.switchToHttp().getRequest().requiredRole = requiredRole;
+    const requiredRole = UserRole.ADMIN;
+    req['requiredRole'] = requiredRole;
 
       return this.menuService.menuUpdate(menuId, input);
   }
@@ -45,10 +46,10 @@ export class MenuMutationsResolver {
   @Mutation(() => MenuDeleteOutput)
   async menuDelete(
     @Args({ name: 'menuId', type: () => ID }) menuId: Menu['id'],
-    @Context() ctx
+    @Context('req') req: Request,
     ) {
-      const requiredRole = UserRole.ADMIN;
-      ctx.switchToHttp().getRequest().requiredRole = requiredRole;
+    const requiredRole = UserRole.ADMIN;
+    req['requiredRole'] = requiredRole;
       
       return this.menuService.menuDelete(menuId)
     }

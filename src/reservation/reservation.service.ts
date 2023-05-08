@@ -136,5 +136,16 @@ export class ReservationService {
     return reservations;
   }
   
+  // Récupérer les réservations pour une journée donnée
+  async getReservationsByDay(date: Date): Promise<Reservation[]> {
+    const reservations = await this.reservationRepository.find({
+      where: {
+        date,
+      },
+      relations: ["user", "table"],
+    });
+
+    return reservations;
+  }
 }  
      

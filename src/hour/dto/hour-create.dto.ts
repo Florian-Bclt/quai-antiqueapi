@@ -1,29 +1,29 @@
-import { InputType, Field, ID, ObjectType } from '@nestjs/graphql';
+import { InputType, Field, ObjectType } from '@nestjs/graphql';
 import { OpeningHours } from '../models/hour.model';
 
 @InputType()
-export class OpeningHoursInput {
-  @Field(() => ID)
-  id: string;
-
-  @Field()
+export class OpeningHoursCreateInput{
+  @Field(() => String)
   dayOfWeek: string;
 
-  @Field()
+  @Field(() => Boolean)
   isClosed: boolean;
 
   @Field({ nullable: true })
-  openTime?: string;
+  lunchOpeningTime?: string;
 
   @Field({ nullable: true })
-  closeTime?: string;
+  lunchClosingTime?: string;
+
+  @Field({ nullable: true })
+  dinnerOpeningTime?: string;
+
+  @Field({ nullable: true })
+  dinnerClosingTime?: string;
 }
 
-@InputType()
-export class OpeningHoursCreateInput extends OpeningHoursInput {}
-
 @ObjectType()
-export class OpeningHoursCreateOuput {
+export class OpeningHoursCreateOutput {
   @Field(() => OpeningHours)
   openingHours: OpeningHours;
 }

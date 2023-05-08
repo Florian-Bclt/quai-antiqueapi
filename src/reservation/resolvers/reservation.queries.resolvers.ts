@@ -20,4 +20,10 @@ export class ReservationQueriesResolver {
   async getReservationsByTable(@Args("tableId") tableId: string): Promise<Reservation[]> {
     return this.reservationService.getReservationsByTable(tableId);
   }
+
+  @Query(returns => [Reservation])
+  async getReservationsByDay(@Args("day") day: string): Promise<Reservation[]> {
+    const date = new Date(day)
+    return this.reservationService.getReservationsByDay(date);
+  }
 }

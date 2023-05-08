@@ -1,29 +1,32 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Node } from 'src/pagination/models/node.model';
+import { Entity, Column } from 'typeorm';
 
 @Entity()
 @ObjectType()
-export class OpeningHours {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class OpeningHours extends Node{
 
   @Field(() => String)
-  @Column({ default: 'Monday' })
-  day: string;
+  @Column()
+  dayOfWeek: string;
 
-  @Field(() => String)
-  @Column({ default: '12:00' })
+  @Field(() => Boolean)
+  @Column()
+  isClosed: boolean;
+
+  @Field(() => String, { nullable: true})
+  @Column({ nullable: true })
   lunchOpeningTime: string;
 
-  @Field(() => String)
-  @Column({ default: '14:00' })
+  @Field(() => String, { nullable: true})
+  @Column({ nullable: true })
   lunchClosingTime: string;
 
-  @Field(() => String)
-  @Column({ default: '19:00' })
+  @Field(() => String, { nullable: true})
+  @Column({ nullable: true })
   dinnerOpeningTime: string;
 
-  @Field(() => String)
-  @Column({ default: '22:00' })
+  @Field(() => String, { nullable: true})
+  @Column({ nullable: true })
   dinnerClosingTime: string;
 }

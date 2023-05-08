@@ -147,11 +147,23 @@ type MenuDeleteOutput {
 }
 
 type OpeningHours {
-  day: String!
-  lunchOpeningTime: String!
-  lunchClosingTime: String!
-  dinnerOpeningTime: String!
-  dinnerClosingTime: String!
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  dayOfWeek: String!
+  isClosed: Boolean!
+  lunchOpeningTime: String
+  lunchClosingTime: String
+  dinnerOpeningTime: String
+  dinnerClosingTime: String
+}
+
+type OpeningHoursCreateOutput {
+  openingHours: OpeningHours!
+}
+
+type OpeningHoursUpdateOutput {
+  openingHours: OpeningHours!
 }
 
 type Gallery {
@@ -186,9 +198,12 @@ type Query {
   productsPagination(skip: Int!, take: Int!, sortBy: SortDirection, category: String): ProductsPagination!
   getMenu(id: String!): Menu!
   getAllMenus: [Menu!]!
+  openingHours: [OpeningHours!]!
+  openingHoursById(id: String!): OpeningHours!
   getReservationById(reservationId: String!): Reservation!
   getReservationsByUser(userId: String!): [Reservation!]!
   getReservationsByTable(tableId: String!): [Reservation!]!
+  getReservationsByDay(day: String!): [Reservation!]!
   getAllGallery: [Gallery!]!
   getGalleryById(id: String!): Gallery!
 }
@@ -212,8 +227,9 @@ type Mutation {
   menuCreate(input: MenuCreateInput!): MenuCreateOutput!
   menuUpdate(menuId: ID!, input: MenuUpdateInput!): MenuUpdateOutput!
   menuDelete(menuId: ID!): MenuDeleteOutput!
-  createOpeningHours(input: OpeningHoursCreateInput!): OpeningHours!
-  updateOpeningHours(id: String!, input: OpeningHoursUpdateInput!): OpeningHours!
+  createOpeningHours(input: OpeningHoursCreateInput!): OpeningHoursCreateOutput!
+  updateOpeningHours(id: ID!, input: OpeningHoursUpdateInput!): OpeningHoursUpdateOutput!
+  DeleteOpeningHours(id: ID!): ID!
   createReservation(userId: String!, reservation: ReservationCreateInput!): Reservation!
   updateReservation(reservationId: String!, reservation: ReservationUpdateInput!): Reservation!
   cancelReservation(reservationId: String!): String!
@@ -298,19 +314,21 @@ input MenuUpdateInput {
 }
 
 input OpeningHoursCreateInput {
-  id: ID!
   dayOfWeek: String!
   isClosed: Boolean!
-  openTime: String
-  closeTime: String
+  lunchOpeningTime: String
+  lunchClosingTime: String
+  dinnerOpeningTime: String
+  dinnerClosingTime: String
 }
 
 input OpeningHoursUpdateInput {
-  id: ID!
   dayOfWeek: String!
   isClosed: Boolean!
-  openTime: String
-  closeTime: String
+  lunchOpeningTime: String
+  lunchClosingTime: String
+  dinnerOpeningTime: String
+  dinnerClosingTime: String
 }
 
 input ReservationCreateInput {
