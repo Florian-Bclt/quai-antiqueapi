@@ -37,7 +37,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_DB'),
         entities: [join(__dirname, '**', '*.model.{ts,js}')],
-        synchronize: true, 
+        synchronize: false, 
         // synchronize: true uniquement en dev sinon utiliser les migrations
       })
     }),
