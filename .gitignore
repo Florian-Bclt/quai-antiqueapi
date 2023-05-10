@@ -4,7 +4,6 @@
 .env
 database.env
 .dockerignore
-Dockerfile
 
 # Logs
 logs
