@@ -35,6 +35,7 @@
     "class-validator": "^0.13.2",
     "docker-compose": "^0.23.17",
     "graphql": "^16.6.0",
+    "moment-timezone": "^0.5.43",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",

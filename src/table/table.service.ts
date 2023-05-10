@@ -7,16 +7,16 @@ import { TableDeleteOutput } from './dto/table-delete.dto';
 import { TableUpdateInput, TableUpdateOutput } from './dto/table-update.dto';
 import { TablesPagination, TablesPaginationArgs } from './dto/tables-pagination.dto';
 import { Table } from './models/table.model';
+import { ReservationService } from 'src/reservation/reservation.service';
 
 
 @Injectable()
 export class TableService {
   constructor(
     @InjectRepository(Table)
-    private readonly tableRepository: Repository<Table>
-  ) {}
+    private readonly tableRepository: Repository<Table>) {}
 
-  // Creation of table
+  // Création de la table
   async tableCreate(
     input: TableCreateInput
     ): Promise<TableCreateOutput> {
@@ -25,6 +25,7 @@ export class TableService {
     return { table };
   }
 
+  // Modification de la table
   async tableUpdate(
     tableId: Table['id'],
     input: TableUpdateInput
@@ -37,6 +38,7 @@ export class TableService {
     return { table };
   }
 
+  // Suppression de la table
   async tableDelete(
     tableId: Table['id']
     ) : Promise<TableDeleteOutput> {
@@ -45,10 +47,12 @@ export class TableService {
     return { tableId };
   }
 
+  // Recherche par tableId
   async findTableById(tableId: string): Promise<Table> {
     return this.tableRepository.findOneOrFail({where : {id : tableId}});
   }
   
+  // Système de pagination pour lister les tables
   async tablesPagination(
     args: TablesPaginationArgs
     ): Promise<TablesPagination> {

@@ -23,7 +23,7 @@ export class OpeningHoursMutationsResolver {
     const requiredRole = UserRole.ADMIN;
     req['requiredRole'] = requiredRole;
 
-    return this.openingHoursService.OpeningHoursCreate(input);
+    return this.openingHoursService.createOpeningHours(input);
 }
 
   // Modifier horaire
@@ -36,7 +36,7 @@ export class OpeningHoursMutationsResolver {
   ) {
     const requiredRole = UserRole.ADMIN;
     req['requiredRole'] = requiredRole;
-    return await this.openingHoursService.OpeningHoursUpdate(id, input);
+    return await this.openingHoursService.updateOpeningHours(id, input);
   }
 
   // Supprimer un horaire
@@ -48,7 +48,7 @@ export class OpeningHoursMutationsResolver {
   ) {
     const requiredRole = UserRole.ADMIN;
     req['requiredRole'] = requiredRole;
-    await this.openingHoursService.OpeningHoursDelete(id);
+    await this.openingHoursService.deleteOpeningHours(id);
     return id
   }
 }

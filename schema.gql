@@ -30,18 +30,6 @@ enum UserRole {
   CLIENT
 }
 
-type Reservation {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  user: User!
-  table: Table!
-  date: DateTime!
-  reservationHour: Int!
-  reservationEndHour: Int!
-  places: Int!
-}
-
 type Table {
   id: ID!
   createdAt: DateTime!
@@ -150,7 +138,7 @@ type OpeningHours {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  dayOfWeek: String!
+  dayOfWeek: Int!
   isClosed: Boolean!
   lunchOpeningTime: String
   lunchClosingTime: String
@@ -200,10 +188,7 @@ type Query {
   getAllMenus: [Menu!]!
   openingHours: [OpeningHours!]!
   openingHoursById(id: String!): OpeningHours!
-  getReservationById(reservationId: String!): Reservation!
-  getReservationsByUser(userId: String!): [Reservation!]!
-  getReservationsByTable(tableId: String!): [Reservation!]!
-  getReservationsByDay(day: String!): [Reservation!]!
+  getOpeningHoursForDay(dayOfWeek: Float!): OpeningHours!
   getAllGallery: [Gallery!]!
   getGalleryById(id: String!): Gallery!
 }
@@ -230,9 +215,6 @@ type Mutation {
   createOpeningHours(input: OpeningHoursCreateInput!): OpeningHoursCreateOutput!
   updateOpeningHours(id: ID!, input: OpeningHoursUpdateInput!): OpeningHoursUpdateOutput!
   DeleteOpeningHours(id: ID!): ID!
-  createReservation(userId: String!, reservation: ReservationCreateInput!): Reservation!
-  updateReservation(reservationId: String!, reservation: ReservationUpdateInput!): Reservation!
-  cancelReservation(reservationId: String!): String!
   galleryCreate(input: GalleryCreateInput!): GalleryCreateOutput!
   galleryUpdate(galleryId: ID!, input: GalleryUpdateInput!): GalleryUpdateOutput!
   galleryDelete(galleryId: ID!): GalleryDeleteOutput!
@@ -314,7 +296,7 @@ input MenuUpdateInput {
 }
 
 input OpeningHoursCreateInput {
-  dayOfWeek: String!
+  dayOfWeek: Int!
   isClosed: Boolean!
   lunchOpeningTime: String
   lunchClosingTime: String
@@ -323,27 +305,12 @@ input OpeningHoursCreateInput {
 }
 
 input OpeningHoursUpdateInput {
-  dayOfWeek: String!
+  dayOfWeek: Int!
   isClosed: Boolean!
   lunchOpeningTime: String
   lunchClosingTime: String
   dinnerOpeningTime: String
   dinnerClosingTime: String
-}
-
-input ReservationCreateInput {
-  guests: Int!
-  date: DateTime!
-  reservationHour: Int!
-  tableId: String!
-}
-
-input ReservationUpdateInput {
-  guests: Int!
-  date: DateTime!
-  reservationHour: Int!
-  tableId: String!
-  id: String!
 }
 
 input GalleryCreateInput {

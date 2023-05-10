@@ -16,4 +16,11 @@ export class OpeningHoursQueryResolver {
   async openingHoursById(@Args('id') id: string): Promise<OpeningHours> {
     return await this.openingHoursService.findOneOpeningHoursById(id);
   }
+
+  @Query(() => OpeningHours)
+  async getOpeningHoursForDay(
+    @Args('dayOfWeek', { type: () => Number }) dayOfWeek: number): Promise<OpeningHours> {
+      const openingHoursForDay = await this.openingHoursService.getOpeningHoursForDay(dayOfWeek);
+      return openingHoursForDay[0];
+  }
 }

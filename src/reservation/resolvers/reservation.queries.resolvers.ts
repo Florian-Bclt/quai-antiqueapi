@@ -6,24 +6,24 @@ import { ReservationService } from "../reservation.service";
 export class ReservationQueriesResolver {
   constructor(private readonly reservationService: ReservationService) {}
 
-  @Query(returns => Reservation)
-  async getReservationById(@Args("reservationId") reservationId: string): Promise<Reservation> {
-    return this.reservationService.getReservationById(reservationId);
-  }
+  // @Query(returns => Reservation)
+  // async getReservationById(@Args("reservationId") reservationId: string): Promise<Reservation> {
+  //   return this.reservationService.getReservationById(reservationId);
+  // }
 
-  @Query(returns => [Reservation])
-  async getReservationsByUser(@Args("userId") userId: string): Promise<Reservation[]> {
-    return this.reservationService.getReservationsByUser(userId);
-  }
+  // @Query(returns => [Reservation])
+  // async getReservationsByUser(@Args("userId") userId: string): Promise<Reservation[]> {
+  //   return this.reservationService.getReservationsByUser(userId);
+  // }
 
-  @Query(returns => [Reservation])
-  async getReservationsByTable(@Args("tableId") tableId: string): Promise<Reservation[]> {
-    return this.reservationService.getReservationsByTable(tableId);
-  }
+  // @Query(returns => [Reservation])
+  // async getReservationsByTable(@Args("tableId") tableId: string): Promise<Reservation[]> {
+  //   return this.reservationService.getReservationsByTable(tableId);
+  // }
 
-  @Query(returns => [Reservation])
-  async getReservationsByDay(@Args("day") day: string): Promise<Reservation[]> {
-    const date = new Date(day)
-    return this.reservationService.getReservationsByDay(date);
-  }
+  // @Query(returns => [Reservation])
+  // async getReservationsByDay(@Args("day") day: string): Promise<Reservation[]> {
+  //   const date = new Date(day)
+  //   return this.reservationService.getReservationsByDay(date);
+  // }
 }

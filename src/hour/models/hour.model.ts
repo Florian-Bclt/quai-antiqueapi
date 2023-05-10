@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Node } from 'src/pagination/models/node.model';
 import { Entity, Column } from 'typeorm';
 
@@ -6,27 +6,27 @@ import { Entity, Column } from 'typeorm';
 @ObjectType()
 export class OpeningHours extends Node{
 
-  @Field(() => String)
+  @Field(() => Int)
   @Column()
-  dayOfWeek: string;
+  dayOfWeek: number;
 
   @Field(() => Boolean)
   @Column()
   isClosed: boolean;
 
-  @Field(() => String, { nullable: true})
-  @Column({ nullable: true })
+  @Field({ nullable: true})
+  @Column({type: 'time', nullable: true})
   lunchOpeningTime: string;
 
-  @Field(() => String, { nullable: true})
-  @Column({ nullable: true })
+  @Field({ nullable: true})
+  @Column({ type: 'time', nullable: true })
   lunchClosingTime: string;
 
-  @Field(() => String, { nullable: true})
-  @Column({ nullable: true })
+  @Field({ nullable: true})
+  @Column({ type: 'time', nullable: true })
   dinnerOpeningTime: string;
 
-  @Field(() => String, { nullable: true})
-  @Column({ nullable: true })
-  dinnerClosingTime?: string;
+  @Field({ nullable: true})
+  @Column({ type: 'time', nullable: true })
+  dinnerClosingTime: string;
 }

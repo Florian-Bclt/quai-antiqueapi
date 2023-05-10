@@ -12,26 +12,24 @@ export class OpeningHoursService {
     private readonly openingHoursRepository: Repository<OpeningHours>,
   ) {}
 
-  // Créer un horaire
-  async OpeningHoursCreate(input: OpeningHoursCreateInput): Promise<OpeningHoursCreateOutput> {
+  async createOpeningHours(input: OpeningHoursCreateInput): Promise<OpeningHoursCreateOutput> {
     const openingHours = this.openingHoursRepository.create(input);
     const savedOpeningHours = await this.openingHoursRepository.save(openingHours);
-    const output = new OpeningHoursCreateOutput();
-    output.openingHours = savedOpeningHours;
-
-    return output;
+    return { openingHours: savedOpeningHours };
   }
 
-  // Modifier un horaire
-  async OpeningHoursUpdate(id: string, input: OpeningHoursUpdateInput): Promise<OpeningHoursUpdateOutput> {
-    const openingHours = await this.openingHoursRepository.findOne({where : { id }});
+  async updateOpeningHours(id: string, input: OpeningHoursUpdateInput): Promise<OpeningHoursUpdateOutput> {
+    const openingHours = await this.openingHoursRepository.findOne({where: { id }});
+    if(!openingHours) {
+      throw new Error(`Opening hours with id ${id} not found`);
+    }
+
     Object.assign(openingHours, input);
-    await this.openingHoursRepository.save(openingHours);
-    return { openingHours}
+    const updatedOpeningHours = await this.openingHoursRepository.save(openingHours);
+    return { openingHours: updatedOpeningHours};
   }
 
-  // Supprimer un horaire
-  async OpeningHoursDelete(id: string): Promise<String> {
+  async deleteOpeningHours(id: string): Promise<string> {
     const result = await this.openingHoursRepository.delete(id);
     if (result.affected === 0) {
       throw new Error(`Opening hours with id ${id} not found`);
@@ -39,13 +37,15 @@ export class OpeningHoursService {
     return id;
   }
 
-  // Afficher la liste des horaires
   async findAllOpeningHours(): Promise<OpeningHours[]> {
-    return await this.openingHoursRepository.find();
+    return this.openingHoursRepository.find();
   }
 
-  // Afficher un horaire en fonction de l'id
   async findOneOpeningHoursById(id: string): Promise<OpeningHours> {
-    return await this.openingHoursRepository.findOne({where : { id }});
+    return this.openingHoursRepository.findOne({where: { id }});
+  }
+
+  async getOpeningHoursForDay(dayOfWeek: number): Promise<OpeningHours[]> {
+    return this.openingHoursRepository.find({ where: { dayOfWeek } })
   }
 }
