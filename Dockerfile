@@ -25,7 +25,7 @@ COPY --from=base /app/package.json package-lock.json ./
 RUN npm install --production=false
 
 # Copy application code
-COPY --link . .
+COPY --from=base . .
 
 # Build application
 RUN npm run build
