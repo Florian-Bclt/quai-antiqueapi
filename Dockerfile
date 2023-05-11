@@ -12,11 +12,6 @@ RUN npm install -g @nestjs/cli
 COPY package.json package-lock.json ./
 RUN npm install --production=false && npm cache clean --force
 
-# Copy only necessary files
-COPY src ./src
-COPY quai-antiqueapi/public ./public
-COPY tsconfig.json ./
-
 # Build application
 RUN npm run build
 
