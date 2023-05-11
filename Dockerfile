@@ -1,43 +1,43 @@
-# syntax = docker/dockerfile:1
-
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=16.16.0
-FROM node:${NODE_VERSION}-slim as base
-
-LABEL fly_launch_runtime="NodeJS"
+# Use official Node.js Alpine image
+FROM node:16-alpine as build
 
 # NodeJS app lives here
 WORKDIR /app
 
-# Set production environment
-ENV NODE_ENV=production
+# Install build dependencies
+RUN apk add --no-cache python3 make g++
 
-# Throw-away build stage to reduce size of final image
-FROM base as build
+# Install dependencies
+COPY quai-antiqueapi/package.json quai-antiqueapi/package-lock.json ./
+RUN npm install --production=false && npm cache clean --force
 
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install -y python3 pkg-config build-essential
-
-# Install node modules
-COPY --from=base quai-antiqueapi/package.json quai-antiqueapi/package-lock.json ./
-RUN npm install --production=false
-
-# Copy application code
-COPY --from=base . .
+# Copy only necessary files
+COPY quai-antiqueapi/src ./src
+COPY quai-antiqueapi/public ./public
+COPY quai-antiqueapi/tsconfig.json ./
 
 # Build application
 RUN npm run build
 
-# Remove development dependencies
-RUN npm prune --production
-
-
 # Final stage for app image
-FROM base
+FROM node:16-alpine
+
+# NodeJS app lives here
+WORKDIR /app
 
 # Copy built application
-COPY --from=build /app /app
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/public ./public
+COPY --from=build /app/package.json ./package.json
+
+# Set production environment
+ENV NODE_ENV=production
+
+# Expose port 8080
+EXPOSE 8080
+
+# Define healthcheck
+HEALTHCHECK --interval=30s --timeout=3s CMD curl --fail http://localhost:8080/health || exit 1
 
 # Start the server by default, this can be overwritten at runtime
 CMD [ "npm", "run", "start" ]
