@@ -14,7 +14,7 @@ RUN npm install --production=false && npm cache clean --force
 
 # Copy only necessary files
 COPY src ./src
-COPY public ./public
+COPY quai-antiqueapi/public ./public
 COPY tsconfig.json ./
 
 # Build application
