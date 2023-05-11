@@ -9,7 +9,7 @@ RUN apk add --no-cache python3 make g++
 RUN npm install -g @nestjs/cli
 
 # Install dependencies
-COPY quai-antiqueapi/package.json quai-antiqueapi/package-lock.json ./
+COPY package.json package-lock.json ./
 RUN npm install --production=false && npm cache clean --force
 
 # Copy only necessary files
