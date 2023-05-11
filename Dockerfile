@@ -21,7 +21,7 @@ RUN apt-get update -qq && \
     apt-get install -y python3 pkg-config build-essential
 
 # Install node modules
-COPY --from=base quai-antiqueAPI/package.json quai-antiqueAPI/package-lock.json ./
+COPY --from=base package.json package-lock.json ./
 RUN npm install --production=false
 
 # Copy application code
