@@ -22,11 +22,6 @@ FROM node:16-alpine
 # NodeJS app lives here
 WORKDIR /app
 
-# Copy built application
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/public ./public
-COPY --from=build /app/package.json ./package.json
-
 # Set production environment
 ENV NODE_ENV=production
 
