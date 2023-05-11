@@ -12,9 +12,6 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV=production
 
-# Define the app directory as an environment variable
-ENV APP_DIRECTORY=/app/quai-antiqueapi
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -23,11 +20,11 @@ RUN apt-get update -qq && \
     apt-get install -y python3 pkg-config build-essential
 
 # Install node modules
-COPY --from=base $APP_DIRECTORY/package.json $APP_DIRECTORY/package-lock.json ./
+COPY --from=base quai-antiqueapi/package.json quai-antiqueapi/package-lock.json ./
 RUN npm install --production=false
 
 # Copy application code
-COPY --from=base $APP_DIRECTORY .
+COPY --from=base . .
 
 # Build application
 RUN npm run build
