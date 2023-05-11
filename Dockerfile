@@ -10,6 +10,7 @@ RUN npm install -g @nestjs/cli
 
 # Install dependencies
 COPY package.json package-lock.json ./
+COPY tscongig.json .
 RUN npm install --production=false && npm cache clean --force
 
 # Build application
