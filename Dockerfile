@@ -13,9 +13,9 @@ COPY package.json package-lock.json ./
 RUN npm install --production=false && npm cache clean --force
 
 # Copy only necessary files
-COPY quai-antiqueapi/src ./src
-COPY quai-antiqueapi/public ./public
-COPY quai-antiqueapi/tsconfig.json ./
+COPY src ./src
+COPY public ./public
+COPY tsconfig.json ./
 
 # Build application
 RUN npm run build
