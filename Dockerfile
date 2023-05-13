@@ -8,10 +8,14 @@ WORKDIR /app
 RUN apk add --no-cache python3 make g++
 RUN npm install -g @nestjs/cli
 
+
 # Install dependencies
 COPY package.json package-lock.json ./
 COPY tsconfig.json .
 RUN npm install --production=false && npm cache clean --force
+
+# Add NestJS to PATH
+ENV PATH="${PATH}:/app/node_modules/.bin"
 
 # Build application
 RUN npm run build
@@ -26,4 +30,4 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 # Start the server by default, this can be overwritten at runtime
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "node", "node_modules/.bin/nest", "start" ]
