@@ -15,3 +15,17 @@ services:
 volumes:
   postgres:
     name: nest-db
+
+api:
+  build: .
+  command: npm run start:dev
+  ports:
+    - '8080:8080'
+  depends-on:
+    - db
+  environment:
+    DATABASE_HOST: ${POSTGRESQL_ADDON_HOST}
+    DATABASE_PORT: ${POSTGRESQL_ADDON_PORT}
+    DATABASE_USER: ${POSTGRESQL_ADDON_USER}
+    DATABASE_PASSWORD: ${POSTGRESQL_ADDON_PASSWORD}
+    DATABASE_DB: ${POSTGRESQL_ADDON_DB}
