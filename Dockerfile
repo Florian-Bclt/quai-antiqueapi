@@ -7,7 +7,7 @@ WORKDIR /app
 # Install build dependencies
 RUN apk add --no-cache python3 make g++
 RUN npm install -g @nestjs/cli
-
+RUN npm install --save @nestjs/common @nestjs/core @nestjs/platform-express
 
 # Install dependencies
 COPY package.json package-lock.json ./
@@ -30,4 +30,4 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 # Start the server by default, this can be overwritten at runtime
-CMD [ "npm", "node", "node_modules/.bin/nest", "start" ]
+CMD [ "npm", "run" "start" ]
