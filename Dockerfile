@@ -2,7 +2,7 @@
 FROM node:16-alpine as build
 
 # NodeJS app lives here
-WORKDIR /src/app
+WORKDIR /src
 
 # Install dependencies
 COPY package*.json ./
