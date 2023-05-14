@@ -18,11 +18,11 @@ volumes:
 
 api:
   build: .
-  command: npm run start:dev
+  command: sh -c 'printenv && npm run start:dev'
   ports:
     - '8080:8080'
   depends-on:
-    - db
+    - postgres
   environment:
     DATABASE_HOST: ${POSTGRESQL_ADDON_HOST}
     DATABASE_PORT: ${POSTGRESQL_ADDON_PORT}
