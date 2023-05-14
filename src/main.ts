@@ -6,8 +6,10 @@ async function bootstrap() {
 
   const port = process.env.PORT || 8080;
 
-  await app.listen(port, () => {
-    console.log(`Application en cours d'exécution sur le port ${port}`);
+  const host = '0.0.0.0';
+
+  await app.listen(port, host, () => {
+    console.log(`Application en cours d'exécution sur le port ${host}:${port}`);
   });
   
 }
