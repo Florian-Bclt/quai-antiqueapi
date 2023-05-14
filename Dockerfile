@@ -14,9 +14,6 @@ COPY package.json package-lock.json ./
 COPY tsconfig.json .
 RUN npm install --production=false && npm cache clean --force
 
-# Add NestJS to PATH
-ENV PATH="${PATH}:/app/node_modules/.bin"
-
 # Build application
 RUN npm run build
 
