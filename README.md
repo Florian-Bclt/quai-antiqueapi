@@ -32,7 +32,13 @@
 $ npm install
 ```
 
-## Running the app
+## Installation de Docker
+
+```bash
+# Récupérer l'image docker
+$ docker pull boucletf/postgres:latest
+
+## Lancer l'application
 
 ```bash
 # development
