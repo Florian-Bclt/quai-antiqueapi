@@ -37,6 +37,7 @@ $ npm install
 ```bash
 # Récupérer l'image docker
 $ docker pull boucletf/postgres:latest
+```
 
 ## Lancer l'application
 
