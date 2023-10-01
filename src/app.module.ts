@@ -18,6 +18,7 @@ import { HourModule } from './hour/hour.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { GalleryModule } from './gallery/gallery.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 @Module({
   imports: [
@@ -29,18 +30,23 @@ import { DashboardModule } from './dashboard/dashboard.module';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('POSTGRESQL_ADDON_HOST'),
-        port: parseInt(configService.get('POSTGRESQL_ADDON_PORT')),
-        username: configService.get('POSTGRESQL_ADDON_USER'),
-        password: configService.get('POSTGRESQL_ADDON_PASSWORD'),
-        database: configService.get('POSTGRESQL_ADDON_DB'),
-        url: configService.get('POSTGRESQL_ADDON_URI'),
-        entities: [join(__dirname, '**', '*.model.{ts,js}')],
-        synchronize: false, 
-        // synchronize: true uniquement en dev sinon utiliser les migrations
-      })
+      useFactory: (configService: ConfigService) => {
+        const postgresConfig: PostgresConnectionOptions = {
+          type: 'postgres',
+          host: configService.get('POSTGRESQL_ADDON_HOST'),
+          port: parseInt(configService.get('POSTGRESQL_ADDON_PORT')),
+          username: configService.get('POSTGRESQL_ADDON_USER'),
+          password: configService.get('POSTGRESQL_ADDON_PASSWORD'),
+          database: configService.get('POSTGRESQL_ADDON_DB'),
+          url: configService.get('POSTGRESQL_ADDON_URI'),
+          entities: [join(__dirname, '**', '*.model.{ts,js}')],
+          synchronize: false, // synchronize: true uniquement en dev sinon utiliser les migrations
+          migrationsRun: true,
+          logging: true,
+          migrations: [join(__dirname, 'migrations/*{.ts,.js')]
+        };
+        return postgresConfig;
+      }
     }),
     TableModule,
     AuthModule,
