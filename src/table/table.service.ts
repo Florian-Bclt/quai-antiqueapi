@@ -7,7 +7,6 @@ import { TableDeleteOutput } from './dto/table-delete.dto';
 import { TableUpdateInput, TableUpdateOutput } from './dto/table-update.dto';
 import { TablesPagination, TablesPaginationArgs } from './dto/tables-pagination.dto';
 import { Table } from './models/table.model';
-import { ReservationService } from 'src/reservation/reservation.service';
 
 
 @Injectable()

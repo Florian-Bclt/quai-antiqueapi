@@ -13,35 +13,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type User {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  email: String!
-  firstName: String!
-  lastName: String!
-  allergy: String
-  role: UserRole!
-}
-
-enum UserRole {
-  ADMIN
-  MANAGER
-  CLIENT
-}
-
-type Reservation {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  user: User!
-  table: Table!
-  date: DateTime!
-  reservationHour: Int!
-  reservationEndHour: Int!
-  places: Int!
-}
-
 type Table {
   id: ID!
   createdAt: DateTime!
@@ -61,6 +32,23 @@ type TableDeleteOutput {
 
 type TableUpdateOutput {
   table: Table!
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  firstName: String!
+  lastName: String!
+  allergy: String
+  role: UserRole!
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  CLIENT
 }
 
 type TablesPagination {
@@ -202,10 +190,6 @@ type Query {
   openingHours: [OpeningHours!]!
   openingHoursById(id: String!): OpeningHours!
   getOpeningHoursForDay(dayOfWeek: Float!): OpeningHours!
-  getReservationById(reservationId: String!): Reservation!
-  getReservationsByUser(userId: String!): [Reservation!]!
-  getReservationsByTable(tableId: String!): [Reservation!]!
-  getReservationsByDay(day: String!): [Reservation!]!
   getAllGallery: [Gallery!]!
   getGalleryById(id: String!): Gallery!
 }
@@ -232,7 +216,6 @@ type Mutation {
   createOpeningHours(input: OpeningHoursCreateInput!): OpeningHoursCreateOutput!
   updateOpeningHours(id: ID!, input: OpeningHoursUpdateInput!): OpeningHoursUpdateOutput!
   DeleteOpeningHours(id: ID!): ID!
-  cancelReservation(reservationId: String!): Reservation!
   galleryCreate(input: GalleryCreateInput!): GalleryCreateOutput!
   galleryUpdate(galleryId: ID!, input: GalleryUpdateInput!): GalleryUpdateOutput!
   galleryDelete(galleryId: ID!): GalleryDeleteOutput!

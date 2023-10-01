@@ -15,7 +15,6 @@ import { UserModule } from './user/user.module';
 import { ProductsModule } from './products/products.module';
 import { MenuModule } from './menu/menu.module';
 import { HourModule } from './hour/hour.module';
-import { ReservationModule } from './reservation/reservation.module';
 import { GalleryModule } from './gallery/gallery.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
@@ -30,6 +29,19 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
+      // useFactory: (configService: ConfigService) => ({
+      //     type: 'postgres',
+      //     host: configService.get('DATABASE_HOST'),
+      //     port: parseInt(configService.get('DATABASE_PORT')),
+      //     username: configService.get('DATABASE_USER'),
+      //     password: configService.get('DATABASE_PASSWORD'),
+      //     database: configService.get('DATABASE_DB'),
+      //     entities: [join(__dirname, '**', '*.model.{ts,js}')],
+      //     synchronize: true,
+      //     migrationsRun: true,
+      //     logging: true,
+      //     migrations: [join(__dirname, 'migrations/*{.ts,.js')]
+      //   })
       useFactory: (configService: ConfigService) => {
         const postgresConfig: PostgresConnectionOptions = {
           type: 'postgres',
@@ -40,7 +52,7 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
           database: configService.get('POSTGRESQL_ADDON_DB'),
           url: configService.get('POSTGRESQL_ADDON_URI'),
           entities: [join(__dirname, '**', '*.model.{ts,js}')],
-          synchronize: false, // synchronize: true uniquement en dev sinon utiliser les migrations
+          synchronize: false,
           migrationsRun: true,
           logging: true,
           migrations: [join(__dirname, 'migrations/*{.ts,.js')]
@@ -54,7 +66,6 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
     ProductsModule,
     MenuModule,
     HourModule,
-    ReservationModule,
     GalleryModule,
     DashboardModule,
   ],

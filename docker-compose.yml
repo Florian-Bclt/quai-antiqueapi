@@ -1,4 +1,8 @@
 version: '3.7'
+
+networks:
+  antiqueapi:
+  
 services:
   postgres:
     image: postgres:13
@@ -11,6 +15,13 @@ services:
       - database.env
     volumes:
       - postgres:/var/lib/postgresql/database
+
+  adminer:
+    image: adminer:4
+    ports:
+      - 8080:8080
+    networks:
+      - antiqueapi
 
 volumes:
   postgres:
