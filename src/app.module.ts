@@ -31,11 +31,12 @@ import { DashboardModule } from './dashboard/dashboard.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get('DATABASE_HOST'),
-        port: parseInt(configService.get('DATABASE_PORT')),
-        username: configService.get('DATABASE_USER'),
-        password: configService.get('DATABASE_PASSWORD'),
-        database: configService.get('DATABASE_DB'),
+        host: configService.get('POSTGRESQL_ADDON_HOST'),
+        port: parseInt(configService.get('POSTGRESQL_ADDON_PORT')),
+        username: configService.get('POSTGRESQL_ADDON_USER'),
+        password: configService.get('POSTGRESQL_ADDON_PASSWORD'),
+        database: configService.get('POSTGRESQL_ADDON_DB'),
+        url: configService.get('POSTGRESQL_ADDON_URI'),
         entities: [join(__dirname, '**', '*.model.{ts,js}')],
         synchronize: false, 
         // synchronize: true uniquement en dev sinon utiliser les migrations

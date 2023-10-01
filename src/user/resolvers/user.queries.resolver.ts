@@ -17,6 +17,18 @@ export class UserQueriesResolver {
     return this.userService.userGet(id);
   }
 
+  @Query(() => User, { name: "getUserById" })
+  async getUserById(
+    @Args("id") id: string,
+    @Args("role", { nullable: true }) role?: UserRole
+  ): Promise<User> {
+    if (!role) {
+      throw new Error("Role is required");
+    }
+
+    return this.userService.getUserById(id, role);
+  }
+
   @Query(() => [User])
   async userGetByRole(@Args('role') role: string): Promise<User[]> {
     const validRoles = Object.values(UserRole);

@@ -30,12 +30,24 @@ enum UserRole {
   CLIENT
 }
 
+type Reservation {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: User!
+  table: Table!
+  date: DateTime!
+  reservationHour: Int!
+  reservationEndHour: Int!
+  places: Int!
+}
+
 type Table {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   title: String!
-  places: Float!
+  places: Int!
   available: Boolean!
 }
 
@@ -181,6 +193,7 @@ type Query {
   tablesPagination(skip: Int!, take: Int!, sortBy: SortDirection): TablesPagination!
   users: [User!]!
   user(id: String!): User!
+  getUserById(id: String!, role: String): User!
   userGetByRole(role: String!): [User!]!
   userGetByRoles(roles: [String!]!): [User!]!
   productsPagination(skip: Int!, take: Int!, sortBy: SortDirection, category: String): ProductsPagination!
@@ -189,6 +202,10 @@ type Query {
   openingHours: [OpeningHours!]!
   openingHoursById(id: String!): OpeningHours!
   getOpeningHoursForDay(dayOfWeek: Float!): OpeningHours!
+  getReservationById(reservationId: String!): Reservation!
+  getReservationsByUser(userId: String!): [Reservation!]!
+  getReservationsByTable(tableId: String!): [Reservation!]!
+  getReservationsByDay(day: String!): [Reservation!]!
   getAllGallery: [Gallery!]!
   getGalleryById(id: String!): Gallery!
 }
@@ -215,6 +232,7 @@ type Mutation {
   createOpeningHours(input: OpeningHoursCreateInput!): OpeningHoursCreateOutput!
   updateOpeningHours(id: ID!, input: OpeningHoursUpdateInput!): OpeningHoursUpdateOutput!
   DeleteOpeningHours(id: ID!): ID!
+  cancelReservation(reservationId: String!): Reservation!
   galleryCreate(input: GalleryCreateInput!): GalleryCreateOutput!
   galleryUpdate(galleryId: ID!, input: GalleryUpdateInput!): GalleryUpdateOutput!
   galleryDelete(galleryId: ID!): GalleryDeleteOutput!

@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType, Int } from '@nestjs/graphql';
 import { Node } from 'src/pagination/models/node.model';
 import { Reservation } from 'src/reservation/models/reservation.model';
 import { Column, Entity, OneToMany } from 'typeorm';
@@ -10,7 +10,7 @@ export class Table extends Node {
   @Column()
   title: string;
 
-  @Field(() => Number)
+  @Field(() => Int)
   @Column({ nullable: false })
   places: number;
 

@@ -16,7 +16,7 @@ RUN npm ci --omit=dev
 # Bundle app source
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3000
 
 # Start the server by default, this can be overwritten at runtime
 CMD [ "npm", "run", "start:prod" ]
