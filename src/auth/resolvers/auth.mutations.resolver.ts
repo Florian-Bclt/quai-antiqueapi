@@ -15,6 +15,10 @@ export class AuthMutationsResolver{
     @Args('username') _username: string,
     @Args('password') _password: string,
   ) {
-    return this.authService.login(req.user);
+    const user = await this.authService.validateUser(_username, _password);
+    if(!user) {
+      throw new Error('Invalid credentials');
+    }
+    return this.authService.login(user);
   }
 }

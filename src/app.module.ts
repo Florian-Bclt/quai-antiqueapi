@@ -40,7 +40,7 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
       //     synchronize: true,
       //     migrationsRun: true,
       //     logging: true,
-      //     migrations: [join(__dirname, 'migrations/*{.ts,.js')]
+      //     migrations: [join(__dirname, 'migrations/*{.ts,.js}')]
       //   })
       useFactory: (configService: ConfigService) => {
         const postgresConfig: PostgresConnectionOptions = {
@@ -55,7 +55,7 @@ import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConne
           synchronize: false,
           migrationsRun: true,
           logging: true,
-          migrations: [join(__dirname, 'migrations/*{.ts,.js')]
+          migrations: [join(__dirname, 'migrations/*{.ts,.js}')]
         };
         return postgresConfig;
       }

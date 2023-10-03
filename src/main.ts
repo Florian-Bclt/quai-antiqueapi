@@ -23,11 +23,6 @@ async function bootstrap() {
     }
   });
 
-  app.enableCors({
-    origin: 'http://localhost:3000',
-    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
-  })
-
   await app.listen(port, host, () => {
     console.log(`Application en cours d'exécution sur le port ${host}:${port}`);
   });

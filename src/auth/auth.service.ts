@@ -22,8 +22,11 @@ export class AuthService {
   async validateUser(email: string, password: string):  Promise<any> {
     const user = await this.userService.userGet(email);
     if (user && user.password === password) {
-      const { password, ...result } = user; //return all user's fields password less
-      return result;
+      const { password, ...result } = user;
+      return {
+        ...result,
+        role: user.role,
+      }
     }
     return null;
   }
@@ -40,6 +43,7 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign(payload),
       role: user.role,
+      user: user
     };
   }
 }

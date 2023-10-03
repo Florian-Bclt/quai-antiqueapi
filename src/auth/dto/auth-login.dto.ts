@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
-import { UserRole } from "src/user/models/user.model";
+import { User, UserRole } from "src/user/models/user.model";
 
 @ObjectType()
 export class AuthLoginOutput {
@@ -8,4 +8,7 @@ export class AuthLoginOutput {
 
   @Field()
   role: UserRole;
+
+  @Field(() => User)
+  user: User;
 }

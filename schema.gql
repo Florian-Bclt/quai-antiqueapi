@@ -67,6 +67,7 @@ type UserUpdateOutput {
 type AuthLoginOutput {
   accessToken: String!
   role: String!
+  user: User!
 }
 
 type Products {
